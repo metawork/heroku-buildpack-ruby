@@ -1,4 +1,9 @@
 # frozen_string_literal: true
+
+# This require is not in the original heroku buildpack but appears required
+# to load SimpleDelegator.
+require "delegate"
+
 #
 # This is a helper class, it wraps a pathname object
 # and adds helper methods used to pull out the first line of the file ("the shebang")
