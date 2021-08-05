@@ -13,7 +13,7 @@ class LanguagePack::Installers::HerokuRubyInstaller
 
   def fetch_unpack(ruby_version, install_dir, build = false)
     FileUtils.mkdir_p(install_dir)
-    system("cp -r \"$HOME\"/.metawork/runtimes/ruby-2.7.3/* \"#{install_dir}\"")
+    system("cp -r \"$HOME\"/.metawork/runtimes/ruby-3.0.2/* \"#{install_dir}\"")
     # Dir.chdir(install_dir) do
     #   file = "#{ruby_version.version_for_download}.tgz"
     #   if build
