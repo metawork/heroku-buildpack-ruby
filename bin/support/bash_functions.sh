@@ -44,18 +44,7 @@ heroku_buildpack_ruby_install_ruby()
   if [ ! -d "$heroku_buildpack_ruby_dir" ]; then
     heroku_buildpack_ruby_dir=$(mktemp -d)
     # bootstrap ruby
-    #$bin_dir/support/download_ruby "$BIN_DIR" "$heroku_buildpack_ruby_dir"
-    mkdir -p "${HOME}/.metawork/"
-    METAWORK_BIN="${HOME}/.metawork/metawork"
-    curl -sSL "https://metawork-public-download.s3.amazonaws.com/stable/metawork/x86_64-unknown-linux-gnu/metawork.gz" | gunzip -c > "$METAWORK_BIN"
-    chmod +x "$METAWORK_BIN"
-    "$METAWORK_BIN" --version
-
-    "$METAWORK_BIN" install ruby 3.0.2
-    "$HOME"/.metawork/runtimes/ruby-3.0.2/bin/ruby --version
-
-    cp -r "$HOME"/.metawork/runtimes/ruby-3.0.2/* "$heroku_buildpack_ruby_dir"
-
+    $bin_dir/support/download_ruby "$BIN_DIR" "$heroku_buildpack_ruby_dir"
     function atexit {
       rm -rf $heroku_buildpack_ruby_dir
     }

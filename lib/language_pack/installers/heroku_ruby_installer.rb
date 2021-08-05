@@ -13,7 +13,13 @@ class LanguagePack::Installers::HerokuRubyInstaller
 
   def fetch_unpack(ruby_version, install_dir, build = false)
     FileUtils.mkdir_p(install_dir)
-    system("cp -r \"$HOME\"/.metawork/runtimes/ruby-3.0.2/* \"#{install_dir}\"")
+    system("mkdir -p #{ENV['HOME']}/.metawork/")
+    
+    metawork_bin="#{ENV['HOME']}/.metawork/metawork"
+    system("curl -sSL \"https://metawork-public-download.s3.amazonaws.com/stable/metawork/x86_64-unknown-linux-gnu/metawork.gz\" | gunzip -c > #{metawork_bin}")
+    system("chmod +x #{metawork_bin}")
+    system("#{metawork_bin} install ruby #{ruby_version.version_for_download.delete_prefix('ruby-')}")
+    system("cp -r #{ENV['HOME']}/.metawork/runtimes/#{ruby_version.version_for_download}/* \"#{install_dir}\"")
     # Dir.chdir(install_dir) do
     #   file = "#{ruby_version.version_for_download}.tgz"
     #   if build
