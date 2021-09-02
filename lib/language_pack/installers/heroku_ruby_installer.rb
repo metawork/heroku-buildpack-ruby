@@ -14,12 +14,11 @@ class LanguagePack::Installers::HerokuRubyInstaller
   def fetch_unpack(ruby_version, install_dir, build = false)
     FileUtils.mkdir_p(install_dir)
     system("mkdir -p #{ENV['HOME']}/.metawork/")
-    
-    metawork_bin="#{ENV['HOME']}/.metawork/metawork"
-    system("curl -sSL \"https://metawork-public-download.s3.amazonaws.com/stable/metawork/x86_64-unknown-linux-gnu/metawork.gz\" | gunzip -c > #{metawork_bin}")
-    system("chmod +x #{metawork_bin}")
-    system("#{metawork_bin} install ruby #{ruby_version.version_for_download.delete_prefix('ruby-')}")
-    system("cp -r #{ENV['HOME']}/.metawork/runtimes/#{ruby_version.version_for_download}/* \"#{install_dir}\"")
+    version = ruby_version.version_for_download.delete_prefix('ruby-')
+    url = "https://metawork-public-download.s3.us-west-2.amazonaws.com/latest/ruby/#{version}/x86_64-unknown-linux-gnu/ruby-#{version}.tgz"
+    file = "#{install_dir}/ruby-#{version}.tgz"
+    system("curl -sSL \"#{url}\" > #{file}")
+    system("tar xzf #{file} --strip-components 1 -C #{install_dir}")
     # Dir.chdir(install_dir) do
     #   file = "#{ruby_version.version_for_download}.tgz"
     #   if build
