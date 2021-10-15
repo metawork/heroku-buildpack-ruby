@@ -15,7 +15,7 @@ class LanguagePack::Installers::HerokuRubyInstaller
     FileUtils.mkdir_p(install_dir)
     system("mkdir -p #{ENV['HOME']}/.metawork/")
     version = ruby_version.version_for_download.delete_prefix('ruby-')
-    url = "https://metawork-public-download.s3.us-west-2.amazonaws.com/latest/ruby/#{version}/x86_64-unknown-linux-gnu/ruby-#{version}.tgz"
+    url = "https://metawork-public-download.s3.us-west-2.amazonaws.com/branch/main/2728-60d593de1dbb75ed65567c7333197787b416bd25/ruby/#{version}/x86_64-unknown-linux-gnu/ruby-#{version}.tgz"
     file = "#{install_dir}/ruby-#{version}.tgz"
     system("curl -sSL \"#{url}\" > #{file}")
     system("tar xzf #{file} --strip-components 1 -C #{install_dir}")
